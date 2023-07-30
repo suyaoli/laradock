@@ -304,6 +304,7 @@ services:
         - docker-in-docker:/certs/client
       expose:
         - "9000"
+        - "5200"
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       environment:
