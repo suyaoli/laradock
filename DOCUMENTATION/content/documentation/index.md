@@ -382,6 +382,41 @@ WORKSPACE_INSTALL_PHPDBG=true
 PHP_FPM_INSTALL_PHPDBG=true
 ```
 
+<br>
+<a name="Install-github-copilot-cli"></a>
+## Install Github Copilot Cli
+### Note: You must have Github Copilot access to use this feature.
+Install `gh-cli` in the Workspace Container:
+
+<br>
+1 - Open the `.env`.
+
+2 - Search for `WORKSPACE_INSTALL_GITHUB_CLI`.
+
+3 - Set value to `true`
+
+```dotenv
+WORKSPACE_INSTALL_GITHUB_CLI=true
+```
+4 - Re-build the containers `docker compose build workspace`
+
+5 - start your container `docker compose up -d workspace // ..and all your other containers`
+
+6 - Enter the Workspace container:
+```bash
+docker-compose exec workspace bash
+```
+
+7 - Authenticate with your github account and follow the instructions::
+```bash
+gh auth login
+```
+
+8 - Install the copilot cli:
+```bash
+ gh extension install github/gh-copilot
+```
+
 
 
 
@@ -1650,7 +1685,7 @@ Update the locale setting, default is `POSIX`
 <a name="CronJobs"></a>
 ## Adding cron jobs
 
-You can add your cron jobs to `workspace/crontab/root` after the `php artisan` line.
+You can add your cron jobs to `workspace/crontab/laradock` after the `php artisan` line.
 
 ```
 * * * * * laradock /usr/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1
@@ -1998,6 +2033,43 @@ To install npm-check-updates CLI [here](https://www.npmjs.com/package/npm-check-
 3 - Search for the `WORKSPACE_INSTALL_NPM_CHECK_UPDATES_CLI` argument under the Workspace Container and set it to `true`
 
 4 - Re-build the container `docker-compose build workspace`
+
+<br>
+<a name="Install-poppler-utils"></a>
+## Install `poppler-utils` (and `antiword` combined)
+
+Poppler is a PDF rendering library based on Xpdf PDF viewer.
+
+This package contains command line utilities (based on Poppler) for getting information of PDF documents, convert them to other formats, or manipulate them:
+* pdfdetach -- lists or extracts embedded files (attachments)
+* pdffonts -- font analyzer
+* pdfimages -- image extractor
+* pdfinfo -- document information
+* pdfseparate -- page extraction tool
+* pdfsig -- verifies digital signatures
+* pdftocairo -- PDF to PNG/JPEG/PDF/PS/EPS/SVG converter using Cairo
+* pdftohtml -- PDF to HTML converter
+* pdftoppm -- PDF to PPM/PNG/JPEG image converter
+* pdftops -- PDF to PostScript (PS) converter
+* pdftotext -- text extraction
+* pdfunite -- document merging tool
+
+`poppler-utils` is often used by popular PDF/DOC parsing packages in combination with `antiword`, hence both are installed when flags in `.env` are set.
+
+To install `poppler-utils` [(more here)](https://packages.debian.org/sid/poppler-utils) in any of the `workspace/php-fpm/php-worker/laravel-horizon` container
+
+1 - Open the `.env` file
+
+2 - Search for the `WORKSPACE_INSTALL_POPPLER_UTILS` argument under the Workspace Container and set it to `true`
+
+3 - Search for the `PHP_FPM_INSTALL_POPPLER_UTILS` argument under the Workspace Container and set it to `true`
+
+4 - Search for the `PHP_WORKER_INSTALL_POPPLER_UTILS` argument under the Workspace Container and set it to `true`
+
+5 - Search for the `LARAVEL_HORIZON_INSTALL_POPPLER_UTILS` argument under the Workspace Container and set it to `true`
+
+6 - Re-build the container `docker-compose build workspace php-fpm php-worker laravel-horizon`
+
 
 
 
